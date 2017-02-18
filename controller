@@ -1,0 +1,45 @@
+
+//***controll4 ****/
+
+<?php
+
+namespace AppBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
+class TodoController extends Controller
+{
+    /**
+     * @Route("/todos", name="todos")
+     */
+    public function indexAction(Request $request)
+    {
+		
+		$em = $this->getDoctrine()->getManager(); // ...or getEntityManager() prior to Symfony 2.1
+		$connection = $em->getConnection();
+		$statement = $connection->prepare("SELECT * FROM blog_post");
+		$statement->execute();
+		$results = $statement->fetchAll();
+		print_r($results);
+        // replace this example code with whatever you need
+        return $this->render('todo/index.html.twig');
+    }
+	/**
+     * @Route("/todos/edit/{id}", name="edit")
+     */
+    public function editAction($id,Request $request)
+    {
+		;
+		$em = $this->getDoctrine()->getManager(); // ...or getEntityManager() prior to Symfony 2.1
+		$connection = $em->getConnection();
+		$statement = $connection->prepare("SELECT * FROM blog_post where id= $id");
+		$statement->execute();
+		$results = $statement->fetchAll();
+		print_r($results);
+        // replace this example code with whatever you need
+        return $this->render('todo/index.html.twig');
+    }
+	
+}
